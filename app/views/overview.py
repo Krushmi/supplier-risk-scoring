@@ -45,8 +45,9 @@ strip([
                "lane baselines · cold-start tier · k-means archetypes · R logistic GLM, vendor GLMM and negative binomial."),
     ("DECISION", f"Watch-list with the shrunk late rate (out-of-time line AUC {e.loc[EB, 'line_auc']:.3f}), not the "
                  f"composite ({e.loc[C, 'line_auc']:.3f}); the raw rate scores {e.loc[RAW, 'line_auc']:.3f}. "
-                 f"{len(watch)} material vendors are High/Elevated. Back-tested reallocation by composite avoids "
-                 f"{scn['late_value_reduction_pct']:.1%} of late value (ASSUMED parameters)."),
+                 f"{len(watch)} material vendors are High/Elevated. In the back-tested reallocation, ranking by shrunk late "
+                 f"rate avoids {t['scenario_eb_ASSUMED']['late_value_reduction_pct']:.1%} of late value vs "
+                 f"{scn['late_value_reduction_pct']:.1%} by composite (ASSUMED parameters)."),
 ])
 scope_note()
 page_story("Which vendors carry recorded delivery risk, and what should procurement do about it this cycle?",
