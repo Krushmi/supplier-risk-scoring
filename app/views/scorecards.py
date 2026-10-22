@@ -1,12 +1,14 @@
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-from core import GREY, NAVY, RED, TIER_ORDER, callout, csv, scope_note, setup_page, summary, usd, vendors
+from core import GREY, NAVY, RED, TIER_ORDER, callout, csv, page_story, scope_note, setup_page, summary, usd, vendors
 
 s = summary()
 setup_page("Vendor scorecards", "Search any vendor (names are public in the dataset) · empirical-Bayes shrunk rates with 90% credible "
            "intervals · composite risk score with 90% Bayesian-bootstrap interval", section="vendor scorecards")
 scope_note()
+page_story('How risky is a specific vendor, and how sure are we?',
+           'Use this in a vendor review: the shrunk rate and its interval stop thin records from looking better or worse than they are.')
 sc = vendors()
 st.warning("Scores describe **recorded delivery performance in this programme**, not vendor quality overall. Most vendors have few lines; "
            "see the line counts and the New / unscored tier before reading anything into a score.")

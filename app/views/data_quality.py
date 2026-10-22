@@ -1,6 +1,6 @@
 import plotly.express as px
 import streamlit as st
-from core import NAVY, SOURCE_CITATION, csv, scope_note, setup_page, summary
+from core import NAVY, SOURCE_CITATION, csv, page_story, scope_note, setup_page, summary
 
 s = summary()
 q, man = s["sql_summary"], s["data_manifest"]
@@ -8,6 +8,8 @@ cl = s["config"]["cleaning"]
 setup_page("Data & quality", "USAID / PEPFAR SCMS delivery history · integrity-checked against the documented shape "
            "(10,324 rows, 33 columns) · numbered DuckDB SQL model · every cleaning action counted", section="data & quality")
 scope_note()
+page_story('Can the delivery records behind every score be trusted?',
+           'Every cleaning action is counted, so any figure elsewhere traces back to the source rows.')
 c = st.columns(5)
 c[0].metric("Order lines", f"{q['n_lines']:,}", "matches documented 10,324", delta_color="off")
 c[1].metric("Shipments (ASN / DN)", f"{q['n_shipments']:,}")

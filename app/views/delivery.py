@@ -1,13 +1,15 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from core import GREY, NAVY, ORANGE, RED, SEQ_RISK, TEAL, csv, scope_note, setup_page, summary
+from core import GREY, NAVY, ORANGE, RED, SEQ_RISK, TEAL, csv, page_story, scope_note, setup_page, summary
 
 s = summary()
 q, r = s["sql_summary"], s["r_summary"]
 setup_page("Delivery performance", "Delivered-to-client date vs scheduled delivery date · external vendors and the SCMS regional "
            "distribution centre · logistics lanes and the R statistical layer", section="delivery performance")
 scope_note()
+page_story('Where and how are deliveries late: by vendor type, country, mode and product group?',
+           'Shows whether lateness is a vendor problem or a lane problem, which decides whether to talk to the vendor or change the route.')
 c = st.columns(4)
 c[0].metric("Vendor late rate", f"{q['ext_late_rate']:.1%}", f"severe (>14 d) {q['ext_severe_late_rate']:.1%}", delta_color="off")
 c[1].metric("Regional DC late rate", f"{q['rdc_late_rate']:.1%}", f"severe {q['rdc_severe_late_rate']:.1%}", delta_color="off")

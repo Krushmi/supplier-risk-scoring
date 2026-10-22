@@ -1,6 +1,6 @@
 import plotly.express as px
 import streamlit as st
-from core import COLORWAY, DIVERGE, csv, scope_note, setup_page, summary, usd, vendors
+from core import COLORWAY, DIVERGE, csv, page_story, scope_note, setup_page, summary, usd, vendors
 
 s = summary()
 cl = s["train_summary"]["clusters"]
@@ -8,6 +8,8 @@ setup_page("Indicative vendor archetypes", f"k-means on {len(s['config']['cluste
            f"chosen by silhouette ({cl['silhouette']:.3f}) · {cl['n_clustered']:,} scored vendors with >= "
            f"{s['config']['clustering']['min_lines']} lines", section="vendor archetypes")
 scope_note()
+page_story('What kinds of vendors are there, beyond a single risk number?',
+           'Indicative groups help tailor the action (monitor, renegotiate, diversify) rather than treat every risky vendor alike.')
 prof = csv("archetype_profiles.csv")
 cols = st.columns(len(prof))
 for c, (_, r) in zip(cols, prof.iterrows(), strict=True):

@@ -1,5 +1,5 @@
 import streamlit as st
-from core import MEMO_URL, REPO_URL, SOURCE_CITATION, callout, csv, setup_page, summary
+from core import MEMO_URL, REPO_URL, SOURCE_CITATION, callout, csv, page_story, setup_page, summary
 
 s = summary()
 _b = csv("oot_backtest_metrics.csv")
@@ -8,6 +8,8 @@ _comp_wins = int((_b["Composite risk score (shrunk)"] > _b["Baseline: raw late r
 t, c, q = s["train_summary"], s["config"], s["sql_summary"]
 setup_page("Methodology & limitations", "How the scores are built, how they were validated, and what they can't tell you",
            section="methodology")
+page_story('How were the scores built, and where do they stop being reliable?',
+           'Read this before quoting any figure: it lists the assumptions, scope and limits behind each page.')
 callout("<b>Buyer and scope.</b> The buyer is a US government health-supply programme (USAID / PEPFAR SCMS). Commodities (antiretrovirals, "
         "HIV test kits and a few others) are shipped to PEPFAR-supported countries, mostly in sub-Saharan Africa. These are <b>not</b> US-domestic "
         "deliveries. Vendors are the real suppliers named in the dataset. Scores describe <b>recorded delivery performance for this programme</b>, "

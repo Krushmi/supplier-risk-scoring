@@ -2,13 +2,29 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from core import NAVY, ORANGE, RED, SEQ, assumed_banner, csv, oot_vendors, scope_note, setup_page, summary, usd, vendors
+from core import (
+    NAVY,
+    ORANGE,
+    RED,
+    SEQ,
+    assumed_banner,
+    csv,
+    oot_vendors,
+    page_story,
+    scope_note,
+    setup_page,
+    summary,
+    usd,
+    vendors,
+)
 
 s = summary()
 ex, t = s["config"]["exposure"], s["train_summary"]
 setup_page("Exposure & scenario simulator", "Value at risk by vendor, assumed-cost exposure, and a back-tested volume reallocation "
            "scenario", section="exposure & scenarios")
 scope_note()
+page_story('How much value is exposed, and what would moving volume be worth under our assumptions?',
+           'Turns risk into dollars; the payoff depends on ASSUMED costs and shifts you can move here.')
 assumed_banner("The dataset has no cost-of-delay data. The cost of a late line, the annual carrying rate, the share of volume moved and how "
                "much of the reliability gap the receiving vendors close are <b>assumptions</b>. Line value, late value and days late are observed.")
 st.write("")

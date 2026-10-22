@@ -4,11 +4,13 @@ from core import (
     AMBER,
     CYAN,
     MEMO_URL,
+    PERSONA,
     PROJECT_TITLE,
     RED,
     TIER_COLORS,
     TIER_ORDER,
     csv,
+    page_story,
     scope_note,
     setup_page,
     strip,
@@ -47,6 +49,45 @@ strip([
                  f"{scn['late_value_reduction_pct']:.1%} of late value (ASSUMED parameters)."),
 ])
 scope_note()
+page_story("Which vendors carry recorded delivery risk, and what should procurement do about it this cycle?",
+           "Start here: the numbered actions are the decisions; the pages linked under them hold the evidence.")
+st.markdown(f"**Who this is for:** a {PERSONA} deciding which vendors to review, monitor or move volume away from.")
+
+ex_t = t["exposure_totals"]
+hi = t["high_tier"]
+scn_eb = t["scenario_eb_ASSUMED"]
+st.subheader("Headline KPIs")
+tiles([
+    ("Share of vendor lines late", f"{q['ext_late_rate']:.1%}", f"of {q['ext_lines']:,} external-vendor order lines", "amber"),
+    ("Value exposed (shrunk late rate)", usd(ex_t["value_at_risk"]),
+     f"of {usd(ex_t['value_usd'])} vendor line value ({ex_t['value_at_risk'] / ex_t['value_usd']:.1%})", "red"),
+    ("Material vendors on watch list", f"{len(watch)}",
+     f"High / Elevated, >= 50 lines · {usd(float(watch.value_at_risk.sum()))} value exposed", "red"),
+    ("Assumed-cost exposure (ASSUMED)", usd(ex_t["total_exposure_ASSUMED"]),
+     "late-line cost + carrying cost at ASSUMED rates", "info"),
+])
+
+st.subheader("Recommendations")
+st.markdown((f"""
+1. **Triage vendors with the shrunk late rate, not the raw rate or the composite.** Value at stake:
+   {usd(ex_t["value_at_risk"])} of value exposed. Why: out-of-time it ranks next-period lateness at line AUC
+   {e.loc[EB, 'line_auc']:.3f} vs {e.loc[RAW, 'line_auc']:.3f} for the raw rate and {e.loc[C, 'line_auc']:.3f} for the composite.
+2. **Review the {hi['n']} High-tier vendors first.** Value at stake: {usd(hi['value_share'] * ex_t['value_usd'])} of line
+   value and {usd(hi['late_value_share'] * ex_t['late_value_usd'])} of late value. Why: they hold {hi['value_share']:.0%} of
+   value but {hi['late_value_share']:.0%} of late value, late rate {hi['late_rate']:.1%} vs {t['overall_ext_late_rate']:.1%} overall.
+3. **Do not score thin vendors; hold them at the prior mean.** Value at stake:
+   {usd(t['unscored_value_share'] * ex_t['value_usd'])} of line value. Why: {t['n_vendors_unscored']} vendors have fewer than
+   {s['config']['scoring']['min_lines_for_score']} lines, too few for a stable rate.
+4. **If volume is reallocated, rank by shrunk late rate; hold the composite-based case.** Value at stake:
+   {usd(scn_eb['late_value_avoided'])} of next-period late value avoided (ASSUMED). Why: in the back-test, ranking by shrunk
+   rate avoids {scn_eb['late_value_reduction_pct']:.1%} of late value vs {scn['late_value_reduction_pct']:.1%} by composite;
+   vendors are often sole-source. [Memo (PDF)]({MEMO_URL})
+""").replace("$", "\\$"))
+lk = st.columns(4)
+lk[0].page_link("views/validation.py", label="1. Risk model & validation", icon=":material/verified:")
+lk[1].page_link("views/scorecards.py", label="2. Vendor scorecards", icon=":material/badge:")
+lk[2].page_link("views/validation.py", label="3. Cold-start check (validation)", icon=":material/verified:")
+lk[3].page_link("views/exposure.py", label="4. Exposure & scenario simulator", icon=":material/tune:")
 
 st.subheader("Programme status")
 tiles([
@@ -91,24 +132,6 @@ with right:
                     f"{r.late_rate_shrunk:.1%} · {r.mean_days_late_shrunk:.1f} mean days late (EB)</div></div>"
                     f"<div class='score'>{r.risk_score:.0f}</div></div>")
     st.markdown("".join(rows), unsafe_allow_html=True)
-
-st.subheader("Recommended actions")
-hi = t["high_tier"]
-a = st.columns(4)
-a[0].markdown(f"**01 · Use the shrunk late rate to triage.** Out-of-time it ranks next-period lateness at line AUC "
-              f"{e.loc[EB, 'line_auc']:.3f} vs {e.loc[RAW, 'line_auc']:.3f} for the raw rate; the composite adds nothing "
-              f"here ({e.loc[C, 'line_auc']:.3f}). Volume-only and lane-mix baselines rank the wrong way "
-              f"({e.loc[VOL, 'line_auc']:.2f} and {e.loc[LANE, 'line_auc']:.2f}).")
-a[1].markdown(f"**02 · Review the {hi['n']} High-tier vendors** - {hi['value_share']:.0%} of vendor line value and "
-              f"{hi['late_value_share']:.0%} of late value, late rate {hi['late_rate']:.1%} vs "
-              f"{t['overall_ext_late_rate']:.1%} overall.")
-a[2].markdown(f"**03 · Do not score thin vendors.** {t['n_vendors_unscored']} vendors have fewer than "
-              f"{s['config']['scoring']['min_lines_for_score']} lines ({t['unscored_line_share']:.0%} of lines, "
-              f"{t['unscored_value_share']:.1%} of value) and sit in the New / unscored tier at the prior mean.")
-a[3].markdown(f"**04 · Hold the reallocation case.** Moving volume away from the top composite group avoids "
-              f"{scn['late_value_reduction_pct']:.1%} of next-period late value (ASSUMED); ranking by raw late rate "
-              f"would avoid {scn_raw['late_value_reduction_pct']:.1%}. Vendors are often sole-source. "
-              f"[Memo (PDF)]({MEMO_URL})")
 
 st.subheader("Score map")
 fig = px.scatter(sc[sc.is_scored], x="value_usd", y="risk_score", color="risk_tier", log_x=True,

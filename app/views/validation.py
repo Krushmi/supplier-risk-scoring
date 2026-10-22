@@ -1,7 +1,7 @@
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
-from core import GREY, NAVY, ORANGE, RED, TEAL, csv, scope_note, setup_page, summary
+from core import GREY, NAVY, ORANGE, RED, TEAL, csv, page_story, scope_note, setup_page, summary
 
 s = summary()
 t = s["train_summary"]
@@ -10,6 +10,8 @@ setup_page("Risk model & validation", f"Out-of-time: score vendors with outcomes
            f"scheduled {m['score_end'][:10]} to {m['validate_end'][:10]} · baselines: raw rate, volume-only, lane-mix-only",
            section="risk model & validation")
 scope_note()
+page_story('Does the risk score actually predict next-period lateness better than simple rules?',
+           'Only a score that wins out-of-time should drive a watch list; this page shows which one does.')
 ev = csv("oot_metrics_main.csv")
 targets = list(ev.target.unique())
 target = st.radio("Next-period target", targets, horizontal=True)

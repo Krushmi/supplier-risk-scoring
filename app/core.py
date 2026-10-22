@@ -21,6 +21,7 @@ SOURCE_CITATION = ("U.S. Agency for International Development (USAID), PEPFAR Su
                    "Delivery History / Supply Chain Shipment Pricing Data, data.usaid.gov (Kaggle copy: "
                    "divyeshardeshana/supply-chain-shipment-pricing-data)")
 MEMO_URL = f"{REPO_URL}/blob/main/docs/procurement_memo.pdf"
+PERSONA = "procurement lead"
 
 # ---- "Control tower" design language: dark slate base, teal/amber accents, RAG risk palette ----
 BG, PANEL, PANEL2, LINE, TEXT, MUTED = "#0b1220", "#111a2e", "#16213a", "#24324f", "#e6edf7", "#9fb0c8"
@@ -137,6 +138,12 @@ def tiles(items: list[tuple[str, str, str, str]]) -> None:
                    f"<div class='lab'>{lab}</div><div class='val'>{val}</div><div class='sub'>{sub}</div></div>"
                    for lab, val, sub, st_ in items)
     st.markdown(f"<div class='tiles'>{html}</div>", unsafe_allow_html=True)
+
+
+def page_story(question: str, so_what: str) -> None:
+    """One-line framing for an analyst: the question this page answers and why it matters."""
+    st.markdown(f"<div class='callout'><b>Question this page answers.</b> {question}<br>"
+                f"<b>So what.</b> {so_what}</div>", unsafe_allow_html=True)
 
 
 def assumed_banner(text: str) -> None:

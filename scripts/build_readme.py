@@ -106,9 +106,14 @@ def main():
 A multipage dark "control tower" Streamlit app (`app/streamlit_app.py`, deployed from `main`) reads **only** derived vendor
 scorecards and aggregates committed in `app/data/` (about 0.25 MB; no line-level rows, no raw data).
 
+**Audience.** The app is written for a **procurement lead** deciding which vendors to review, monitor or move volume
+away from. The Executive summary opens with headline KPIs (share of vendor lines late, value exposed, material vendors
+on the watch list) and numbered recommendations, each with the value at stake, a one-line reason and a link to the
+supporting page. Every page starts with the question it answers and a one-line "so what".
+
 | Page | What it shows |
 |---|---|
-| Executive summary | question, KPI cards, risk tiers by value and late value, recommendations |
+| Executive summary | question, headline KPI cards, numbered recommendations with value at stake and links, risk tiers by value and late value |
 | Data & quality | provenance, pipeline graph, the cleaning log, DQ checks and definitions |
 | Delivery performance | lateness by year, offset distribution, country / mode, R GLM odds ratios and GLMM |
 | Vendor scorecards | searchable vendor lookup: raw vs shrunk rates, credible and bootstrap intervals, component radar, cold-start tier |
