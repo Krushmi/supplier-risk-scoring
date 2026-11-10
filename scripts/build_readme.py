@@ -82,7 +82,7 @@ def main():
 > and {late.loc[RAW, 'line_auc']:.3f} for the raw late rate on only {m['n_vendors_evaluated']} evaluable vendors and {m['next_late_lines']} late lines, so a simple
 > baseline matches or beats the composite and every interval is wide.
 
-[![CI](https://github.com/Abhi237/supplier-risk-scoring/actions/workflows/ci.yml/badge.svg)](https://github.com/Abhi237/supplier-risk-scoring/actions/workflows/ci.yml)
+[![CI](https://github.com/Krushmi/supplier-risk-scoring/actions/workflows/ci.yml/badge.svg)](https://github.com/Krushmi/supplier-risk-scoring/actions/workflows/ci.yml)
 · SQL (DuckDB) · Python (empirical Bayes, scikit-learn) · R (GLM, lme4, MASS, Quarto) · Streamlit
 
 | | |
