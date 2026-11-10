@@ -103,7 +103,7 @@ def main():
 > **recorded delivery performance in this programme, not vendor quality overall**, and rest on limited samples.
 
 ## Interactive app
-A multipage dark "control tower" Streamlit app (`app/streamlit_app.py`, deployed from `main`) reads **only** derived vendor
+A multipage dark "control tower" Streamlit app (`app/streamlit_app.py`, deployed from `main` at [https://krushmi-supplier-risk-scoring.streamlit.app/](https://krushmi-supplier-risk-scoring.streamlit.app/)) reads **only** derived vendor
 scorecards and aggregates committed in `app/data/` (about 0.25 MB; no line-level rows, no raw data).
 
 **Audience.** The app is written for a **procurement lead** deciding which vendors to review, monitor or move volume
