@@ -14,7 +14,7 @@ import streamlit as st
 
 DATA = Path(__file__).resolve().parent / "data"
 DOCS = Path(__file__).resolve().parents[1] / "docs"
-REPO_URL = "https://github.com/Abhi237/supplier-risk-scoring"
+REPO_URL = "https://github.com/Krushmi/supplier-risk-scoring"
 PROJECT_TITLE = ("Health Supply Vendor Risk - Using empirical-Bayes shrinkage and multilevel models to score on-time "
                  "delivery risk on USAID / PEPFAR health-commodity order lines")
 SOURCE_CITATION = ("U.S. Agency for International Development (USAID), PEPFAR Supply Chain Management System (SCMS) "
