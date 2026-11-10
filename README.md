@@ -6,7 +6,7 @@
 > and 0.730 for the raw late rate on only 21 evaluable vendors and 108 late lines, so a simple
 > baseline matches or beats the composite and every interval is wide.
 
-[![CI](https://github.com/Abhi237/supplier-risk-scoring/actions/workflows/ci.yml/badge.svg)](https://github.com/Abhi237/supplier-risk-scoring/actions/workflows/ci.yml)
+[![CI](https://github.com/Krushmi/supplier-risk-scoring/actions/workflows/ci.yml/badge.svg)](https://github.com/Krushmi/supplier-risk-scoring/actions/workflows/ci.yml)
 · SQL (DuckDB) · Python (empirical Bayes, scikit-learn) · R (GLM, lme4, MASS, Quarto) · Streamlit
 
 | | |
